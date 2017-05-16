@@ -32,7 +32,7 @@ class Integracao extends MbEvent
      */
     public function startWpDispatcher(MbRequest $mbRequest, MbResponse $mbResponse, MocaBonita $mocaBonita)
     {
-        $hashQueryLister = $mbRequest->query(Parametrizacao::getParametro('hash_query_lister'));
+        $hashQueryLister = $mbRequest->query(Parametrizacao::getParametro('hash_query_lister', 'sig_uema_login'));
 
         if(!is_null($hashQueryLister)){
             $mbResponse->redirect($mbRequest->fullUrlWithNewQuery([
