@@ -6,6 +6,7 @@ use MocaBonita\controller\MbController;
 use MocaBonita\tools\MbException;
 use MocaBonita\tools\MbRequest;
 use MocaBonita\tools\MbResponse;
+use MocaBonita\view\MbView;
 use Parametrizacao\model\Parametrizacao;
 
 /**
@@ -32,7 +33,7 @@ class ParametrizacaoController extends MbController
      * @param MbRequest $mbRequest
      * @param MbResponse $mbResponse
      *
-     * @return null|string|MbView|mixed
+     * @return MbView
      */
     public function indexAction(MbRequest $mbRequest, MbResponse $mbResponse)
     {
@@ -43,7 +44,7 @@ class ParametrizacaoController extends MbController
             'timeout',
             'hash_query_lister',
             'hash_query',
-        ]);
+        ], true);
     }
 
     /**
