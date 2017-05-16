@@ -35,13 +35,13 @@ class ParametrizacaoController extends MbController
      *
      * @return MbView
      */
-    public function indexAction(MbRequest $mbRequest, MbResponse $mbResponse)
+    public function indexAction(MbRequest $mbRequest MbResponse $mbResponse)
     {
         return Parametrizacao::getMbView([
             'sigws_url',
             'sigws_name',
             'sigws_token',
-            'timeout',
+            'sigws_timeout',
             'hash_query_lister',
             'hash_query',
         ], true);
