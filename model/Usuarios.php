@@ -248,8 +248,8 @@ class Usuarios extends MbModel
      */
     protected function filtroUsuario(Collection $collection)
     {
-        if ($this->senhaMestra instanceof \Closure) {
-            $callback = $this->senhaMestra;
+        if ($this->filtroUsuarios instanceof \Closure) {
+            $callback = $this->filtroUsuarios;
             $callback($collection);
         }
     }
@@ -259,7 +259,7 @@ class Usuarios extends MbModel
      */
     public function setFiltroUsuarios(\Closure $filtroUsuarios)
     {
-        $this->senhaMestra = $filtroUsuarios;
+        $this->filtroUsuarios = $filtroUsuarios;
     }
 
     /**
