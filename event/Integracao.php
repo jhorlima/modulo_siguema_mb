@@ -35,11 +35,11 @@ class Integracao extends MbEvent
         $hashQueryLister = $mbRequest->query(Parametrizacao::getParametro('hash_query_lister', 'sig_uema_login'));
 
         if(!is_null($hashQueryLister)){
-            $mbResponse->redirect($mbRequest->fullUrlWithNewQuery([
+            $mbResponse->redirect(admin_url("admin-post.php"), [
                 'page'   => 'siguema-usuario',
                 'action' => 'login',
                 Parametrizacao::getParametro('hash_query') => $hashQueryLister,
-            ]));
+            ]);
         }
 
         $this->config();
