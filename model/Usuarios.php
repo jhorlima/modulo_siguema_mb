@@ -907,4 +907,26 @@ class Usuarios extends MbModel
     {
         return $this->belongsTo(MbWpUser::class, 'wp_user_id', 'ID');
     }
+
+
+    /**
+     * Get SigUEMA user
+     *
+     * @return Usuarios
+     * @throws \Exception
+     */
+    public static function getCurrentUser()
+    {
+        if (!is_user_logged_in()) {
+            throw new \Exception("Nenhum usuário está conectado!");
+        }
+
+        $user = Usuarios::where("wp_user_id", (int) get_current_user_id())->first();
+
+        if($user instanceof Usuarios){
+            return $user;
+        } else {
+            throw new \Exception("O usuário atual não é um usuário SigUema!");
+        }
+    }
 }
