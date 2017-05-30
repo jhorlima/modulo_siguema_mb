@@ -200,6 +200,13 @@ class Usuarios extends MbModel
     protected $modalidade_educacao;
 
     /**
+     * Usuario atual
+     *
+     * @var Usuarios
+     */
+    protected static $currentUser;
+
+    /**
      * Lista de váriaveis para salvar em massa
      *
      * @var array
@@ -315,7 +322,7 @@ class Usuarios extends MbModel
      */
     public function getNome()
     {
-        return $this->nome;
+        return $this->attributes['nome'];
     }
 
     /**
@@ -324,7 +331,7 @@ class Usuarios extends MbModel
      */
     public function setNome($nome)
     {
-        $this->nome = $nome;
+        $this->attributes['nome'] = $nome;
         return $this;
     }
 
@@ -333,7 +340,7 @@ class Usuarios extends MbModel
      */
     public function getTipo()
     {
-        return $this->tipo;
+        return $this->attributes['tipo'];
     }
 
     /**
@@ -342,7 +349,7 @@ class Usuarios extends MbModel
      */
     public function setTipo($tipo)
     {
-        $this->tipo = $tipo;
+        $this->attributes['tipo']= $tipo;
         return $this;
     }
 
@@ -351,7 +358,7 @@ class Usuarios extends MbModel
      */
     public function getCpfCnpj()
     {
-        return $this->cpf_cnpj;
+        return $this->attributes['cpf_cnpj'];
     }
 
     /**
@@ -360,7 +367,7 @@ class Usuarios extends MbModel
      */
     public function setCpfCnpj($cpf_cnpj)
     {
-        $this->cpf_cnpj = $cpf_cnpj;
+        $this->attributes['cpf_cnpj']= $cpf_cnpj;
         return $this;
     }
 
@@ -369,7 +376,7 @@ class Usuarios extends MbModel
      */
     public function getIdPessoa()
     {
-        return $this->id_pessoa;
+        return $this->attributes['id_pessoa'];
     }
 
     /**
@@ -378,7 +385,7 @@ class Usuarios extends MbModel
      */
     public function setIdPessoa($id_pessoa)
     {
-        $this->id_pessoa = $id_pessoa;
+        $this->attributes['id_pessoa']= $id_pessoa;
         return $this;
     }
 
@@ -387,7 +394,7 @@ class Usuarios extends MbModel
      */
     public function getIdUnidade()
     {
-        return $this->id_unidade;
+        return $this->attributes['id_unidade'];
     }
 
     /**
@@ -396,7 +403,7 @@ class Usuarios extends MbModel
      */
     public function setIdUnidade($id_unidade)
     {
-        $this->id_unidade = $id_unidade;
+        $this->attributes['id_unidade']= $id_unidade;
         return $this;
     }
 
@@ -405,7 +412,7 @@ class Usuarios extends MbModel
      */
     public function getUnidade()
     {
-        return $this->unidade;
+        return $this->attributes['unidade'];
     }
 
     /**
@@ -414,7 +421,7 @@ class Usuarios extends MbModel
      */
     public function setUnidade($unidade)
     {
-        $this->unidade = $unidade;
+        $this->attributes['unidade']= $unidade;
         return $this;
     }
 
@@ -423,7 +430,7 @@ class Usuarios extends MbModel
      */
     public function getSigla()
     {
-        return $this->sigla;
+        return $this->attributes['sigla'];
     }
 
     /**
@@ -432,7 +439,7 @@ class Usuarios extends MbModel
      */
     public function setSigla($sigla)
     {
-        $this->sigla = $sigla;
+        $this->attributes['sigla']= $sigla;
         return $this;
     }
 
@@ -441,7 +448,7 @@ class Usuarios extends MbModel
      */
     public function isIsAcademica()
     {
-        return $this->is_academica;
+        return $this->attributes['is_academica'];
     }
 
     /**
@@ -450,7 +457,7 @@ class Usuarios extends MbModel
      */
     public function setIsAcademica($is_academica)
     {
-        $this->is_academica = $is_academica;
+        $this->attributes['is_academica']= $is_academica;
         return $this;
     }
 
@@ -459,7 +466,7 @@ class Usuarios extends MbModel
      */
     public function getIdCentro()
     {
-        return $this->id_centro;
+        return $this->attributes['id_centro'];
     }
 
     /**
@@ -468,7 +475,7 @@ class Usuarios extends MbModel
      */
     public function setIdCentro($id_centro)
     {
-        $this->id_centro = $id_centro;
+        $this->attributes['id_centro']= $id_centro;
         return $this;
     }
 
@@ -477,7 +484,7 @@ class Usuarios extends MbModel
      */
     public function getNomeCentro()
     {
-        return $this->nome_centro;
+        return $this->attributes['nome_centro'];
     }
 
     /**
@@ -486,7 +493,7 @@ class Usuarios extends MbModel
      */
     public function setNomeCentro($nome_centro)
     {
-        $this->nome_centro = $nome_centro;
+        $this->attributes['nome_centro']= $nome_centro;
         return $this;
     }
 
@@ -495,7 +502,7 @@ class Usuarios extends MbModel
      */
     public function getSiglaCentro()
     {
-        return $this->sigla_centro;
+        return $this->attributes['sigla_centro'];
     }
 
     /**
@@ -504,7 +511,7 @@ class Usuarios extends MbModel
      */
     public function setSiglaCentro($sigla_centro)
     {
-        $this->sigla_centro = $sigla_centro;
+        $this->attributes['sigla_centro']= $sigla_centro;
         return $this;
     }
 
@@ -513,7 +520,7 @@ class Usuarios extends MbModel
      */
     public function getIdCategoria()
     {
-        return $this->id_categoria;
+        return $this->attributes['id_categoria'];
     }
 
     /**
@@ -522,7 +529,7 @@ class Usuarios extends MbModel
      */
     public function setIdCategoria($id_categoria)
     {
-        $this->id_categoria = $id_categoria;
+        $this->attributes['id_categoria']= $id_categoria;
         return $this;
     }
 
@@ -531,7 +538,7 @@ class Usuarios extends MbModel
      */
     public function getCategoria()
     {
-        return $this->categoria;
+        return $this->attributes['categoria'];
     }
 
     /**
@@ -540,7 +547,7 @@ class Usuarios extends MbModel
      */
     public function setCategoria($categoria)
     {
-        $this->categoria = $categoria;
+        $this->attributes['categoria']= $categoria;
         return $this;
     }
 
@@ -549,7 +556,7 @@ class Usuarios extends MbModel
      */
     public function getCargo()
     {
-        return $this->cargo;
+        return $this->attributes['cargo'];
     }
 
     /**
@@ -558,7 +565,7 @@ class Usuarios extends MbModel
      */
     public function setCargo($cargo)
     {
-        $this->cargo = $cargo;
+        $this->attributes['cargo']= $cargo;
         return $this;
     }
 
@@ -567,7 +574,7 @@ class Usuarios extends MbModel
      */
     public function getCodigoCurso()
     {
-        return $this->codigo_curso;
+        return $this->attributes['codigo_curso'];
     }
 
     /**
@@ -576,7 +583,7 @@ class Usuarios extends MbModel
      */
     public function setCodigoCurso($codigo_curso)
     {
-        $this->codigo_curso = $codigo_curso;
+        $this->attributes['codigo_curso']= $codigo_curso;
         return $this;
     }
 
@@ -585,7 +592,7 @@ class Usuarios extends MbModel
      */
     public function getCurso()
     {
-        return $this->curso;
+        return $this->attributes['curso'];
     }
 
     /**
@@ -594,7 +601,7 @@ class Usuarios extends MbModel
      */
     public function setCurso($curso)
     {
-        $this->curso = $curso;
+        $this->attributes['curso']= $curso;
         return $this;
     }
 
@@ -603,7 +610,7 @@ class Usuarios extends MbModel
      */
     public function getIdModalidadeEducacao()
     {
-        return $this->id_modalidade_educacao;
+        return $this->attributes['id_modalidade_educacao'];
     }
 
     /**
@@ -612,7 +619,7 @@ class Usuarios extends MbModel
      */
     public function setIdModalidadeEducacao($id_modalidade_educacao)
     {
-        $this->id_modalidade_educacao = $id_modalidade_educacao;
+        $this->attributes['id_modalidade_educacao']= $id_modalidade_educacao;
         return $this;
     }
 
@@ -621,7 +628,7 @@ class Usuarios extends MbModel
      */
     public function getNivel()
     {
-        return $this->nivel;
+        return $this->attributes['nivel'];
     }
 
     /**
@@ -630,7 +637,7 @@ class Usuarios extends MbModel
      */
     public function setNivel($nivel)
     {
-        $this->nivel = $nivel;
+        $this->attributes['nivel']= $nivel;
         return $this;
     }
 
@@ -639,7 +646,7 @@ class Usuarios extends MbModel
      */
     public function getModalidadeEducacao()
     {
-        return $this->modalidade_educacao;
+        return $this->attributes['modalidade_educacao'];
     }
 
     /**
@@ -648,7 +655,7 @@ class Usuarios extends MbModel
      */
     public function setModalidadeEducacao($modalidade_educacao)
     {
-        $this->modalidade_educacao = $modalidade_educacao;
+        $this->attributes['modalidade_educacao']= $modalidade_educacao;
         return $this;
     }
 
@@ -908,7 +915,6 @@ class Usuarios extends MbModel
         return $this->belongsTo(MbWpUser::class, 'wp_user_id', 'ID');
     }
 
-
     /**
      * Get SigUEMA user
      *
@@ -917,6 +923,10 @@ class Usuarios extends MbModel
      */
     public static function getCurrentUser()
     {
+        if(self::$currentUser instanceof Usuarios){
+            return self::$currentUser;
+        }
+
         if (!is_user_logged_in()) {
             throw new \Exception("Nenhum usuário está conectado!");
         }
@@ -924,7 +934,8 @@ class Usuarios extends MbModel
         $user = Usuarios::where("wp_user_id", (int) get_current_user_id())->first();
 
         if($user instanceof Usuarios){
-            return $user;
+            self::$currentUser = $user;
+            return self::$currentUser;
         } else {
             throw new \Exception("O usuário atual não é um usuário SigUema!");
         }
