@@ -820,6 +820,9 @@ class Usuarios extends MbModel
             throw new \Exception("Este usuário não tem permissão suficiente para acessar o sistema!");
         }
 
+        $dados = $collection->first();
+        $cpf = Arr::get($dados, 'cpf_cnpj');
+
         if($salvar){
 
             $userId = username_exists($cpf);
@@ -831,7 +834,6 @@ class Usuarios extends MbModel
 
                     MbDatabase::beginTransaction();
 
-                    $dados       = $collection->first();
                     $data        = new \DateTime("now", new \DateTimeZone('America/Sao_Paulo'));
                     $nome        = Arr::get($dados, 'nome');
                     $explodeName = explode(" ", $nome);
@@ -839,7 +841,7 @@ class Usuarios extends MbModel
                     $lastName    = Arr::last($explodeName);
 
                     $wpUser = MbWpUser::create([
-                        'user_login'      => Arr::get($dados, 'cpf_cnpj'),
+                        'user_login'      => $cpf,
                         'user_pass'       => md5($senha),
                         'user_nicename'   => sanitize_title($nome),
                         'user_email'      => Arr::get($dados, 'email', null),
