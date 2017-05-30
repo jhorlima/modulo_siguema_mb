@@ -839,7 +839,7 @@ class Usuarios extends MbModel
                     $lastName    = Arr::last($explodeName);
 
                     $wpUser = MbWpUser::create([
-                        'user_login'      => $cpf,
+                        'user_login'      => Arr::get($dados, 'cpf_cnpj'),
                         'user_pass'       => md5($senha),
                         'user_nicename'   => sanitize_title($nome),
                         'user_email'      => Arr::get($dados, 'email', null),
@@ -855,7 +855,7 @@ class Usuarios extends MbModel
                     add_user_meta($userId, 'wp_user_level'       , self::getInstance()->getWpUserLevel());
                     add_user_meta($userId, 'first_name'          , $firstName);
                     add_user_meta($userId, 'last_name'           , $lastName);
-                    add_user_meta($userId, 'nickname'            , "{$firstName}_{$lastName}");
+                    add_user_meta($userId, 'nickname'            , "{$firstName} {$lastName}");
 
                     foreach ($collection->toArray() as $tipo => $usuario){
                         $collection->put($tipo, self::salvarUsuario($usuario, $tipo, $userId));
