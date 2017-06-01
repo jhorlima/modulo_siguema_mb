@@ -3,6 +3,7 @@
 namespace SigUema\service;
 
 use Illuminate\Support\Arr;
+use MocaBonita\tools\MbException;
 use MocaBonita\tools\MbSingleton;
 use \Exception;
 
@@ -163,9 +164,9 @@ class WebService extends MbSingleton
         $messageError = is_null($messageError) ? "Ocorreu um erro ao consultar o SigUema." : $messageError;
 
         if ($response instanceof \WP_Error) {
-            throw new Exception($response->get_error_message(), 400);
+            throw new MbException($response->get_error_message(), 400);
         } elseif (!$this->isJson($response['body'])) {
-            throw new Exception($messageError, 400, ['data' => $response['body']]);
+            throw new MbException($messageError, 400, ['data' => $response['body']]);
         }
 
         $body = json_decode($response['body'], true);
