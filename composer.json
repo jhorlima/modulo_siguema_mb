@@ -1,6 +1,7 @@
 {
     "name": "jhorlima/siguema",
     "description": "Modulo SigUEMA para o MocaBonita",
+    "version": "1.0.0",
     "keywords": [
         "wordpress",
         "plugin",
@@ -8,6 +9,7 @@
         "wp-mocabonita",
         "uema"
     ],
+    "minimum-stability" : "dev",
     "homepage": "http://gitbucket.uema.br:980/jhorlima/modulo_siguema_mb",
     "type": "wordpress-framework-plugin",
     "authors": [
@@ -23,7 +25,7 @@
         }
     },
     "require": {
-        "jhorlima/wp-mocabonita": "3.1.0",
+        "jhorlima/wp-mocabonita": "dev-master",
         "jhorlima/parametrizacao": "1.*"
     }
 }
