@@ -1,6 +1,11 @@
 <?php
 
 namespace SigUema\event;
+use MocaBonita\MocaBonita;
+use MocaBonita\tools\MbPage;
+use MocaBonita\tools\MbRequest;
+use MocaBonita\tools\MbResponse;
+use SigUema\controller\ParametrizacaoController;
 
 /**
  * Class IntegracaoSemLogin
