@@ -9,7 +9,6 @@
         "wp-mocabonita",
         "uema"
     ],
-    "minimum-stability" : "dev",
     "homepage": "http://gitbucket.uema.br:980/jhorlima/modulo_siguema_mb",
     "type": "wordpress-framework-plugin",
     "authors": [
@@ -25,8 +24,8 @@
         }
     },
     "require": {
-        "jhorlima/wp-mocabonita": "dev-master",
-        "jhorlima/parametrizacao": "1.*",
-        "jenssegers/agent": "^3.0@dev"
+        "jhorlima/wp-mocabonita": ">=3.1.0",
+        "jhorlima/parametrizacao": ">=1.0.1",
+        "jenssegers/agent": "^2.5"
     }
 }
