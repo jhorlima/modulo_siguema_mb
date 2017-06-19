@@ -987,6 +987,8 @@ class Usuarios extends MbModel
             throw new \Exception("Você não pode realizar essa operação a partir desse navegador.");
         } elseif (!Str::equals($agentCurrent->device(), $agentSigUema->device())){
             throw new \Exception("Você não pode realizar essa operação a partir desse dispositivo.");
+        } elseif (!Str::equals($agentCurrent->version($agentCurrent->browser()), $agentSigUema->version($agentSigUema->browser()))){
+            throw new \Exception("Você não pode realizar essa operação.");
         }
 
         $dateSiguema = Carbon::createFromFormat('Y-m-d H:i:s.u', Arr::get($registroEntrada, 'data'));
