@@ -2,10 +2,12 @@
 
 namespace SigUema\model;
 
+use Carbon\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use MocaBonita\MocaBonita;
 use MocaBonita\model\MbWpUser;
 use MocaBonita\tools\eloquent\MbDatabase;
@@ -41,9 +43,9 @@ class Usuarios extends MbModel
     /**
      * Armazenar filtro de usuário
      *
-     * @var \Closure
+     * @var \Closure[]
      */
-    protected $filtroUsuarios;
+    protected $filtroUsuarios = [];
 
     /**
      * Array de capability
@@ -255,9 +257,10 @@ class Usuarios extends MbModel
      */
     protected function filtroUsuario(Collection $collection)
     {
-        if ($this->filtroUsuarios instanceof \Closure) {
-            $callback = $this->filtroUsuarios;
-            $callback($collection);
+        if(is_array($this->filtroUsuarios)){
+            foreach ($this->filtroUsuarios as $filtroUsuario){
+                $filtroUsuario($collection);
+            }
         }
     }
 
@@ -266,7 +269,7 @@ class Usuarios extends MbModel
      */
     public function setFiltroUsuarios(\Closure $filtroUsuarios)
     {
-        $this->filtroUsuarios = $filtroUsuarios;
+        $this->filtroUsuarios[] = $filtroUsuarios;
     }
 
     /**
@@ -895,6 +898,12 @@ class Usuarios extends MbModel
             ->setValidations('hash', MbStringValidation::getInstance(), ['min' => 32, 'max' => 32])
             ->check(true);
 
+        Usuarios::getInstance()->setFiltroUsuarios(function (Collection $collection){
+            $dadosUsuario = $collection->first();
+
+            Usuarios::validarRegistroEntrada(Arr::get($dadosUsuario, 'registro_entrada'));
+        });
+
         $collection = Usuarios::obterUsuario($hash, null, true);
         $wpUser = $collection->get('wp_user');
 
@@ -939,5 +948,53 @@ class Usuarios extends MbModel
         } else {
             throw new \Exception("O usuário atual não é um usuário SigUema!");
         }
+    }
+
+    /**
+     *
+     * Verificar se o usuário atual está logado no SigUema
+     *
+     * @param array $registroEntrada
+     *
+     * @return bool
+     *
+     * @throws \Exception
+     */
+    public static function validarRegistroEntrada($registroEntrada){
+
+        $mbRequest = MocaBonita::getInstance()->getMbRequest();
+
+        if(!is_array($registroEntrada)){
+            throw new \Exception("Nenhum registro de entrada foi encontrado para este usuário.");
+        } elseif (!is_null(Arr::get($registroEntrada, 'data_saida'))){
+            throw new \Exception("Você está desconectado do SigUema.");
+        }
+
+        if(!Str::equals($mbRequest->getHost(), "localhost")){
+            if(!Str::equals($mbRequest->ip(), Arr::get($registroEntrada, 'ip'))){
+                throw new \Exception("Você não pode realizar essa operação a partir desse endereço de IP.");
+            }
+        }
+
+        $agentCurrent = new Agent();
+        $agentSigUema = new Agent(null, Arr::get($registroEntrada, 'user_agent'));
+
+        if($agentCurrent->isRobot()){
+            throw new \Exception("Rôbos não podem realizar esta operação!");
+        } elseif (!Str::equals($agentCurrent->platform(), $agentSigUema->platform())){
+            throw new \Exception("Você não pode realizar essa operação a partir dessa plataforma.");
+        } elseif (!Str::equals($agentCurrent->browser(), $agentSigUema->browser())){
+            throw new \Exception("Você não pode realizar essa operação a partir desse navegador.");
+        } elseif (!Str::equals($agentCurrent->device(), $agentSigUema->device())){
+            throw new \Exception("Você não pode realizar essa operação a partir desse dispositivo.");
+        }
+
+        $dateSiguema = Carbon::createFromFormat('Y-m-d H:i:s.u', Arr::get($registroEntrada, 'data'));
+
+        if(!$dateSiguema->isToday()){
+            throw new \Exception("Sua sessão já expirou. Você precisa entrar novamente no SigUema!");
+        }
+
+        return true;
     }
 }
