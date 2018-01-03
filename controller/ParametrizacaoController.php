@@ -48,9 +48,10 @@ class ParametrizacaoController extends MbController
     }
 
     /**
-     * @param MbRequest $mbRequest
+     * @param MbRequest  $mbRequest
      * @param MbResponse $mbResponse
-     * @throws MbException
+     *
+     * @return MbView
      */
     public function salvarAction(MbRequest $mbRequest, MbResponse $mbResponse)
     {
@@ -58,12 +59,11 @@ class ParametrizacaoController extends MbController
 
         try {
             Parametrizacao::salvarParametro($mbRequest->input());
-            $mbResponse->redirect($mbRequest->fullUrlWithNewAction('index'));
-        } catch (MbException $e) {
-            $e->setExceptionData($mbView);
-            throw $e;
+            $mbResponse->redirect($mbRequest->urlAction('index'));
         } catch (\Exception $e) {
-            throw new MbException($e->getMessage(), $e->getCode(), $mbView);
+            MbException::registerError($e);
+        } finally {
+            return $mbView;
         }
     }
 
