@@ -13,13 +13,9 @@
     </thead>
     <tbody>
 
-    <?php foreach ($usuarios as $usuario): ?>
+    <?php foreach ($this->getAttribute('usuarios') as $usuario): ?>
     <tr>
-        <td class="row-title">
-            <label for="tablecell">
-                <?= $usuario->nome; ?>
-            </label>
-        </td>
+        <td class="row-title"><label for="tablecell"><?= $usuario->nome; ?></label></td>
         <td><?= $usuario->cpf_cnpj; ?></td>
         <td><?= $usuario->tipo; ?></td>
         <td><?= $usuario->unidade; ?></td>

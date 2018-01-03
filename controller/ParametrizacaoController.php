@@ -55,14 +55,13 @@ class ParametrizacaoController extends MbController
      */
     public function salvarAction(MbRequest $mbRequest, MbResponse $mbResponse)
     {
-        $mbView = $this->indexAction($mbRequest, $mbResponse);
-
         try {
             Parametrizacao::salvarParametro($mbRequest->input());
-            $mbResponse->redirect($mbRequest->urlAction('index'));
+            $mbResponse->adminNotice('Parametro atualizado com sucesso!');
         } catch (\Exception $e) {
             MbException::registerError($e);
         } finally {
+            $mbView = $this->indexAction($mbRequest, $mbResponse);
             return $mbView;
         }
     }
