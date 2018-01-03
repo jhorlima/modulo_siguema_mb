@@ -128,8 +128,14 @@ class Integracao extends MbEvent
 
             } catch (MbException $e) {
 
-                if($e->getWpError() instanceof \WP_Error){
-                    $userWp = $e->getWpError();
+                $userWp = new \WP_Error('denied', "ERRO: {$e->getMessage()}");
+
+                $erros = $e->getData();
+
+                if(is_array($erros)){
+                    foreach($erros['messages'] as $item => $erro){
+                        $userWp->add($item, implode('<br>', $erro));
+                    }
                 }
 
                 return $userWp;

@@ -1,7 +1,7 @@
 {
     "name": "jhorlima/siguema",
     "description": "Modulo SigUEMA para o MocaBonita",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "keywords": [
         "wordpress",
         "plugin",
@@ -24,7 +24,7 @@
         }
     },
     "require": {
-        "jhorlima/wp-mocabonita": ">=3.1.0",
+        "jhorlima/wp-mocabonita": ">=3.3.0",
         "jhorlima/parametrizacao": ">=1.0.1",
         "jenssegers/agent": "^2.5"
     }
