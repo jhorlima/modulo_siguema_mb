@@ -870,7 +870,9 @@ class Usuarios extends MbModel
                     add_user_meta($userId, 'nickname'            , "{$firstName} {$lastName}");
 
                     foreach ($collection->toArray() as $tipo => $usuario){
-                        $collection->put($tipo, self::salvarUsuario($usuario, $tipo, $userId));
+                        if(is_array($usuario)){
+                            $collection->put($tipo, self::salvarUsuario($usuario, $tipo, $userId));
+                        }
                     }
 
                     MbDatabase::commit();
