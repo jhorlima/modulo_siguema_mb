@@ -16,11 +16,13 @@ use MocaBonita\tools\validation\MbBooleanValidation;
 use MocaBonita\tools\validation\MbNumberValidation;
 use MocaBonita\tools\validation\MbStringValidation;
 use MocaBonita\tools\validation\MbValidation;
+use Parametrizacao\model\Parametrizacao;
 use SigUema\service\CPFValidation;
 use SigUema\service\WebService;
 
 /**
  * Class Usuarios
+ *
  * @package SigUema\model
  */
 class Usuarios extends MbModel
@@ -45,7 +47,10 @@ class Usuarios extends MbModel
      *
      * @var \Closure[]
      */
-    protected $filtroUsuarios = [];
+    protected $filtroUsuarios = [
+        'before' => [],
+        'after'  => [],
+    ];
 
     /**
      * Array de capability
@@ -255,10 +260,10 @@ class Usuarios extends MbModel
     /**
      *
      */
-    protected function filtroUsuario(Collection $collection)
+    protected function filtroUsuario(Collection $collection, $before = true)
     {
-        if(is_array($this->filtroUsuarios)){
-            foreach ($this->filtroUsuarios as $filtroUsuario){
+        if (is_array($this->filtroUsuarios[$before ? 'before' : 'after'])) {
+            foreach ($this->filtroUsuarios[$before ? 'before' : 'after'] as $filtroUsuario) {
                 $filtroUsuario($collection);
             }
         }
@@ -267,9 +272,9 @@ class Usuarios extends MbModel
     /**
      * @param \Closure $filtroUsuarios
      */
-    public function setFiltroUsuarios(\Closure $filtroUsuarios)
+    public function setFiltroUsuarios(\Closure $filtroUsuarios, $before = true)
     {
-        $this->filtroUsuarios[] = $filtroUsuarios;
+        $this->filtroUsuarios[$before ? 'before' : 'after'][] = $filtroUsuarios;
     }
 
     /**
@@ -282,11 +287,13 @@ class Usuarios extends MbModel
 
     /**
      * @param \array[] $wp_capabilities
+     *
      * @return Usuarios
      */
     public function setWpCapabilities(array $wp_capabilities)
     {
         $this->wp_capabilities = $wp_capabilities;
+
         return $this;
     }
 
@@ -295,16 +302,18 @@ class Usuarios extends MbModel
      */
     public function getWpUserLevel()
     {
-        return !is_null($this->wp_user_level) ? (int) $this->wp_user_level : 0;
+        return !is_null($this->wp_user_level) ? (int)$this->wp_user_level : 0;
     }
 
     /**
      * @param int $wp_user_level
+     *
      * @return Usuarios
      */
     public function setWpUserLevel($wp_user_level)
     {
         $this->wp_user_level = $wp_user_level;
+
         return $this;
     }
 
@@ -330,11 +339,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $nome
+     *
      * @return Usuarios
      */
     public function setNome($nome)
     {
         $this->attributes['nome'] = $nome;
+
         return $this;
     }
 
@@ -348,11 +359,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $tipo
+     *
      * @return Usuarios
      */
     public function setTipo($tipo)
     {
-        $this->attributes['tipo']= $tipo;
+        $this->attributes['tipo'] = $tipo;
+
         return $this;
     }
 
@@ -366,11 +379,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $cpf_cnpj
+     *
      * @return Usuarios
      */
     public function setCpfCnpj($cpf_cnpj)
     {
-        $this->attributes['cpf_cnpj']= $cpf_cnpj;
+        $this->attributes['cpf_cnpj'] = $cpf_cnpj;
+
         return $this;
     }
 
@@ -384,11 +399,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $id_pessoa
+     *
      * @return Usuarios
      */
     public function setIdPessoa($id_pessoa)
     {
-        $this->attributes['id_pessoa']= $id_pessoa;
+        $this->attributes['id_pessoa'] = $id_pessoa;
+
         return $this;
     }
 
@@ -402,11 +419,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $id_unidade
+     *
      * @return Usuarios
      */
     public function setIdUnidade($id_unidade)
     {
-        $this->attributes['id_unidade']= $id_unidade;
+        $this->attributes['id_unidade'] = $id_unidade;
+
         return $this;
     }
 
@@ -420,11 +439,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $unidade
+     *
      * @return Usuarios
      */
     public function setUnidade($unidade)
     {
-        $this->attributes['unidade']= $unidade;
+        $this->attributes['unidade'] = $unidade;
+
         return $this;
     }
 
@@ -438,11 +459,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $sigla
+     *
      * @return Usuarios
      */
     public function setSigla($sigla)
     {
-        $this->attributes['sigla']= $sigla;
+        $this->attributes['sigla'] = $sigla;
+
         return $this;
     }
 
@@ -456,11 +479,13 @@ class Usuarios extends MbModel
 
     /**
      * @param boolean $is_academica
+     *
      * @return Usuarios
      */
     public function setIsAcademica($is_academica)
     {
-        $this->attributes['is_academica']= $is_academica;
+        $this->attributes['is_academica'] = $is_academica;
+
         return $this;
     }
 
@@ -474,11 +499,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $id_centro
+     *
      * @return Usuarios
      */
     public function setIdCentro($id_centro)
     {
-        $this->attributes['id_centro']= $id_centro;
+        $this->attributes['id_centro'] = $id_centro;
+
         return $this;
     }
 
@@ -492,11 +519,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $nome_centro
+     *
      * @return Usuarios
      */
     public function setNomeCentro($nome_centro)
     {
-        $this->attributes['nome_centro']= $nome_centro;
+        $this->attributes['nome_centro'] = $nome_centro;
+
         return $this;
     }
 
@@ -510,11 +539,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $sigla_centro
+     *
      * @return Usuarios
      */
     public function setSiglaCentro($sigla_centro)
     {
-        $this->attributes['sigla_centro']= $sigla_centro;
+        $this->attributes['sigla_centro'] = $sigla_centro;
+
         return $this;
     }
 
@@ -528,11 +559,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $id_categoria
+     *
      * @return Usuarios
      */
     public function setIdCategoria($id_categoria)
     {
-        $this->attributes['id_categoria']= $id_categoria;
+        $this->attributes['id_categoria'] = $id_categoria;
+
         return $this;
     }
 
@@ -546,11 +579,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $categoria
+     *
      * @return Usuarios
      */
     public function setCategoria($categoria)
     {
-        $this->attributes['categoria']= $categoria;
+        $this->attributes['categoria'] = $categoria;
+
         return $this;
     }
 
@@ -564,11 +599,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $cargo
+     *
      * @return Usuarios
      */
     public function setCargo($cargo)
     {
-        $this->attributes['cargo']= $cargo;
+        $this->attributes['cargo'] = $cargo;
+
         return $this;
     }
 
@@ -582,11 +619,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $codigo_curso
+     *
      * @return Usuarios
      */
     public function setCodigoCurso($codigo_curso)
     {
-        $this->attributes['codigo_curso']= $codigo_curso;
+        $this->attributes['codigo_curso'] = $codigo_curso;
+
         return $this;
     }
 
@@ -600,11 +639,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $curso
+     *
      * @return Usuarios
      */
     public function setCurso($curso)
     {
-        $this->attributes['curso']= $curso;
+        $this->attributes['curso'] = $curso;
+
         return $this;
     }
 
@@ -618,11 +659,13 @@ class Usuarios extends MbModel
 
     /**
      * @param int $id_modalidade_educacao
+     *
      * @return Usuarios
      */
     public function setIdModalidadeEducacao($id_modalidade_educacao)
     {
-        $this->attributes['id_modalidade_educacao']= $id_modalidade_educacao;
+        $this->attributes['id_modalidade_educacao'] = $id_modalidade_educacao;
+
         return $this;
     }
 
@@ -636,11 +679,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $nivel
+     *
      * @return Usuarios
      */
     public function setNivel($nivel)
     {
-        $this->attributes['nivel']= $nivel;
+        $this->attributes['nivel'] = $nivel;
+
         return $this;
     }
 
@@ -654,11 +699,13 @@ class Usuarios extends MbModel
 
     /**
      * @param string $modalidade_educacao
+     *
      * @return Usuarios
      */
     public function setModalidadeEducacao($modalidade_educacao)
     {
-        $this->attributes['modalidade_educacao']= $modalidade_educacao;
+        $this->attributes['modalidade_educacao'] = $modalidade_educacao;
+
         return $this;
     }
 
@@ -704,6 +751,7 @@ class Usuarios extends MbModel
 
     /**
      * @param array $attributes
+     *
      * @return MbValidation
      */
     protected function validation(array $attributes)
@@ -723,8 +771,8 @@ class Usuarios extends MbModel
         ]);
 
         $validation->setValidations('nome', MbStringValidation::getInstance(), [
-            'min' => 5,
-            'max' => 255,
+            'min'       => 5,
+            'max'       => 255,
             'str_upper' => true,
         ]);
         $validation->setValidations('tipo', MbStringValidation::getInstance());
@@ -758,9 +806,9 @@ class Usuarios extends MbModel
     }
 
     /**
-     * @param array $dados
+     * @param array  $dados
      * @param string $tipo
-     * @param int $userId
+     * @param int    $userId
      *
      * @return mixed
      *
@@ -779,15 +827,15 @@ class Usuarios extends MbModel
                 'tipo'     => $tipo,
             ], $dados);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             throw new \Exception("Não foi possível cadastrar o Usuário.");
         }
     }
 
     /**
      * @param string|integer $cpf
-     * @param null $senha
-     * @param bool $salvar
+     * @param null           $senha
+     * @param bool           $salvar
      *
      * @return Collection
      *
@@ -799,8 +847,7 @@ class Usuarios extends MbModel
             $params = [
                 'login' => $cpf,
             ];
-        }
-        else {
+        } else {
             $params = [
                 'login' => $cpf,
                 'senha' => md5($senha),
@@ -826,29 +873,29 @@ class Usuarios extends MbModel
 
         self::getInstance()->filtroUsuario($collection);
 
-        if($collection->isEmpty()){
+        if ($collection->isEmpty()) {
             throw new \Exception("Este usuário não tem permissão suficiente para acessar o sistema!");
         }
 
         $dados = $collection->first();
         $cpf = Arr::get($dados, 'cpf_cnpj');
 
-        if($salvar){
+        if ($salvar) {
 
             $userId = username_exists($cpf);
 
-            if($userId){
+            if ($userId) {
                 wp_set_password($senha, $userId);
             } else {
-                try{
+                try {
 
                     MbDatabase::beginTransaction();
 
-                    $data        = new \DateTime("now", new \DateTimeZone('America/Sao_Paulo'));
-                    $nome        = Arr::get($dados, 'nome');
+                    $data = new \DateTime("now", new \DateTimeZone('America/Sao_Paulo'));
+                    $nome = Arr::get($dados, 'nome');
                     $explodeName = explode(" ", $nome);
-                    $firstName   = Arr::first($explodeName);
-                    $lastName    = Arr::last($explodeName);
+                    $firstName = Arr::first($explodeName);
+                    $lastName = Arr::last($explodeName);
 
                     $wpUser = MbWpUser::create([
                         'user_login'      => $cpf,
@@ -863,20 +910,20 @@ class Usuarios extends MbModel
                     $userId = $wpUser->ID;
 
                     add_user_meta($userId, 'show_admin_bar_front', false);
-                    add_user_meta($userId, 'wp_capabilities'     , self::getInstance()->getWpCapabilities());
-                    add_user_meta($userId, 'wp_user_level'       , self::getInstance()->getWpUserLevel());
-                    add_user_meta($userId, 'first_name'          , $firstName);
-                    add_user_meta($userId, 'last_name'           , $lastName);
-                    add_user_meta($userId, 'nickname'            , "{$firstName} {$lastName}");
+                    add_user_meta($userId, 'wp_capabilities', self::getInstance()->getWpCapabilities());
+                    add_user_meta($userId, 'wp_user_level', self::getInstance()->getWpUserLevel());
+                    add_user_meta($userId, 'first_name', $firstName);
+                    add_user_meta($userId, 'last_name', $lastName);
+                    add_user_meta($userId, 'nickname', "{$firstName} {$lastName}");
 
-                    foreach ($collection->toArray() as $tipo => $usuario){
-                        if(is_array($usuario)){
+                    foreach ($collection->toArray() as $tipo => $usuario) {
+                        if (is_array($usuario)) {
                             $collection->put($tipo, self::salvarUsuario($usuario, $tipo, $userId));
                         }
                     }
 
                     MbDatabase::commit();
-                } catch (\Exception $e){
+                } catch (\Exception $e) {
                     MbDatabase::rollBack();
                     throw $e;
                 }
@@ -884,6 +931,8 @@ class Usuarios extends MbModel
 
             $userWp = get_user_by('login', $cpf);
             $collection->put('wp_user', $userWp);
+
+            self::getInstance()->filtroUsuario($collection, false);
         }
 
         return $collection;
@@ -894,13 +943,14 @@ class Usuarios extends MbModel
      *
      * @param $hash
      */
-    public static function logarRota($hash){
+    public static function logarRota($hash)
+    {
 
         MbValidation::validate(['hash' => $hash])
             ->setValidations('hash', MbStringValidation::getInstance(), ['min' => 32, 'max' => 32])
             ->check(true);
 
-        Usuarios::getInstance()->setFiltroUsuarios(function (Collection $collection){
+        Usuarios::getInstance()->setFiltroUsuarios(function (Collection $collection) {
             $dadosUsuario = $collection->first();
 
             Usuarios::validarRegistroEntrada(Arr::get($dadosUsuario, 'registro_entrada'));
@@ -934,7 +984,7 @@ class Usuarios extends MbModel
      */
     public static function getCurrentUser()
     {
-        if(self::$currentUser instanceof Usuarios){
+        if (self::$currentUser instanceof Usuarios) {
             return self::$currentUser;
         }
 
@@ -942,10 +992,11 @@ class Usuarios extends MbModel
             throw new \Exception("Nenhum usuário está conectado!");
         }
 
-        $user = Usuarios::where("wp_user_id", (int) get_current_user_id())->first();
+        $user = Usuarios::where("wp_user_id", (int)get_current_user_id())->first();
 
-        if($user instanceof Usuarios){
+        if ($user instanceof Usuarios) {
             self::$currentUser = $user;
+
             return self::$currentUser;
         } else {
             throw new \Exception("O usuário atual não é um usuário SigUema!");
@@ -962,41 +1013,47 @@ class Usuarios extends MbModel
      *
      * @throws \Exception
      */
-    public static function validarRegistroEntrada($registroEntrada){
+    public static function validarRegistroEntrada($registroEntrada)
+    {
 
         $mbRequest = MocaBonita::getInstance()->getMbRequest();
 
-        if(!is_array($registroEntrada)){
-            throw new \Exception("Nenhum registro de entrada foi encontrado para este usuário.");
-        } elseif (!is_null(Arr::get($registroEntrada, 'data_saida'))){
-            throw new \Exception("Você está desconectado do SigUema.");
-        }
+        if (!empty(Parametrizacao::getParametro('registro_entrada', false))) {
 
-        if(!Str::equals($mbRequest->getHost(), "localhost")){
-            if(!Str::equals($mbRequest->ip(), Arr::get($registroEntrada, 'ip'))){
-                throw new \Exception("Você não pode realizar essa operação a partir desse endereço de IP.");
+            if (!is_array($registroEntrada)) {
+                throw new \Exception("Nenhum registro de entrada foi encontrado para este usuário.");
+            } elseif (!is_null(Arr::get($registroEntrada, 'data_saida'))) {
+                throw new \Exception("Você está desconectado do SigUema.");
             }
-        }
 
-        $agentCurrent = new Agent();
-        $agentSigUema = new Agent(null, Arr::get($registroEntrada, 'user_agent'));
+            if (!Str::equals($mbRequest->getHost(), "localhost")) {
+                if (!Str::equals($mbRequest->ip(), Arr::get($registroEntrada, 'ip'))) {
+                    throw new \Exception("Você não pode realizar essa operação a partir desse endereço de IP.");
+                }
+            }
 
-        if($agentCurrent->isRobot()){
-            throw new \Exception("Rôbos não podem realizar esta operação!");
-        } elseif (!Str::equals($agentCurrent->platform(), $agentSigUema->platform())){
-            throw new \Exception("Você não pode realizar essa operação a partir dessa plataforma.");
-        } elseif (!Str::equals($agentCurrent->browser(), $agentSigUema->browser())){
-            throw new \Exception("Você não pode realizar essa operação a partir desse navegador.");
-        } elseif (!Str::equals($agentCurrent->device(), $agentSigUema->device())){
-            throw new \Exception("Você não pode realizar essa operação a partir desse dispositivo.");
-        } elseif (!Str::equals($agentCurrent->version($agentCurrent->browser()), $agentSigUema->version($agentSigUema->browser()))){
-            throw new \Exception("Você não pode realizar essa operação.");
-        }
+            $agentCurrent = new Agent();
+            $agentSigUema = new Agent(null, Arr::get($registroEntrada, 'user_agent'));
 
-        $dateSiguema = Carbon::createFromFormat('Y-m-d H:i:s.u', Arr::get($registroEntrada, 'data'));
+            if ($agentCurrent->isRobot()) {
+                throw new \Exception("Rôbos não podem realizar esta operação!");
+            } elseif (!Str::equals($agentCurrent->platform(), $agentSigUema->platform())) {
+                throw new \Exception("Você não pode realizar essa operação a partir dessa plataforma.");
+            } elseif (!Str::equals($agentCurrent->browser(), $agentSigUema->browser())) {
+                throw new \Exception("Você não pode realizar essa operação a partir desse navegador.");
+            } elseif (!Str::equals($agentCurrent->device(), $agentSigUema->device())) {
+                throw new \Exception("Você não pode realizar essa operação a partir desse dispositivo.");
+            } elseif (!Str::equals($agentCurrent->version($agentCurrent->browser()),
+                $agentSigUema->version($agentSigUema->browser()))) {
+                throw new \Exception("Você não pode realizar essa operação.");
+            }
 
-        if(!$dateSiguema->isToday()){
-            throw new \Exception("Sua sessão já expirou. Você precisa entrar novamente no SigUema!");
+            $dateSiguema = Carbon::createFromFormat('Y-m-d H:i:s.u', Arr::get($registroEntrada, 'data'));
+
+            if (!$dateSiguema->isToday()) {
+                throw new \Exception("Sua sessão já expirou. Você precisa entrar novamente no SigUema!");
+            }
+
         }
 
         return true;

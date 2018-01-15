@@ -44,6 +44,7 @@ class ParametrizacaoController extends MbController
             'sigws_timeout',
             'hash_query_lister',
             'hash_query',
+            'registro_entrada',
         ], true);
     }
 
